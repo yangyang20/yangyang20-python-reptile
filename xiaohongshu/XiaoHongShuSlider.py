@@ -49,14 +49,15 @@ class XiaoHongShu:
             driver.get(url)
             self.data['url'] = url
             self.url = url
-            WebDriverWait(driver, 7).until(
+            WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.CLASS_NAME, "slide")))
             html = driver.find_element_by_id('app').get_attribute('innerHTML')
             self.parseHtml(html)
             self.data['real_url'] = driver.current_url
             driver.close()
         except Exception as error:
-            self.error =  f"{self.url}网址有问题:"+error
+            print(error)
+            self.error =  f"{self.url}网址有问题:"
             self.status=-1
 
 
@@ -86,7 +87,8 @@ class XiaoHongShu:
             # print(contentList)
 
         except Exception as error:
-            self.error =  f"{self.url}解析有问题"+error
+            print(error)
+            self.error =  f"{self.url}解析有问题"
             self.status=-1
 
 
@@ -113,7 +115,8 @@ class XiaoHongShu:
             f.close()
             self.status=1
         except Exception as error:
-            self.error=  f"{self.url}下载有问题"+error
+            print(error)
+            self.error=  f"{self.url}下载有问题"
             self.status=-1
 
 
