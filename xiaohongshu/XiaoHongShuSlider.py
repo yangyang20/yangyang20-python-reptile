@@ -56,7 +56,7 @@ class XiaoHongShu:
             self.data['real_url'] = driver.current_url
             driver.close()
         except Exception as error:
-            self.error =  f"{self.url}网址有问题:"+format(error)
+            self.error =  f"{self.url}网址有问题:"+error
             self.status=-1
 
 
@@ -86,7 +86,7 @@ class XiaoHongShu:
             # print(contentList)
 
         except Exception as error:
-            self.error =  f"{self.url}解析有问题"+format(error)
+            self.error =  f"{self.url}解析有问题"+error
             self.status=-1
 
 
@@ -113,7 +113,7 @@ class XiaoHongShu:
             f.close()
             self.status=1
         except Exception as error:
-            self.error=  f"{self.url}下载有问题"+format(error)
+            self.error=  f"{self.url}下载有问题"+error
             self.status=-1
 
 
@@ -139,7 +139,7 @@ class XiaoHongShu:
             cursor.close()
             self.status=1
         except Exception as error:
-            self.error =  f"{self.url}数据库插入错误" +format(error)
+            self.error =  f"{self.url}数据库插入错误" +error
             self.status=-1
 
 
