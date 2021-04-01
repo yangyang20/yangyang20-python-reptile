@@ -1,3 +1,6 @@
+import configparser
+import os
+
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,6 +11,13 @@ import re
 import pymysql
 from selenium.webdriver.chrome.options import Options
 
+curpath = "../"
+cfgpath = os.path.join(curpath, "setting.conf")
+
+
+cf = configparser.ConfigParser()
+cf.read(cfgpath, encoding="utf-8")
+
 opts = Options()
 # opts.headless = True
 
@@ -16,7 +26,7 @@ opts.add_argument('--disable-dev-shm-usage')
 opts.add_argument('--headless')
 opts.add_argument('blink-settings=imagesEnabled=false')
 opts.add_argument('--disable-gpu')
-drive_path='./chromedriver'
+drive_path=cf.get("path","drive_path")
 
 baseUrl='https://wuhan.newhouse.fang.com'
 driver = webdriver.Chrome(executable_path=drive_path,options=opts)
