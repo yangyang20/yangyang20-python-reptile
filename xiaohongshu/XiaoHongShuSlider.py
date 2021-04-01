@@ -41,83 +41,83 @@ class XiaoHongShu:
         self.url=''
 
     def requestUrl(self,url):
-        try:
-            driver = webdriver.Chrome(executable_path=drive_path, options=opts)
-            # url = baseUrl + '60500ecf000000002103f257'
+        # try:
+        driver = webdriver.Chrome(executable_path=drive_path, options=opts)
+        # url = baseUrl + '60500ecf000000002103f257'
 
-            # self.data['xiaohongshu_id'] = id
-            driver.get(url)
-            self.data['url'] = url
-            self.url = url
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CLASS_NAME, "slide")))
-            html = driver.find_element_by_id('app').get_attribute('innerHTML')
-            self.parseHtml(html)
-            self.data['real_url'] = driver.current_url
-            driver.close()
-        except Exception as error:
-            print(error)
-            self.error =  f"{self.url}网址有问题:"
-            self.status=-1
+        # self.data['xiaohongshu_id'] = id
+        driver.get(url)
+        self.data['url'] = url
+        self.url = url
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "slide")))
+        html = driver.find_element_by_id('app').get_attribute('innerHTML')
+        self.parseHtml(html)
+        self.data['real_url'] = driver.current_url
+        driver.close()
+        # except Exception as error:
+        #     print(error)
+        #     self.error =  f"{self.url}网址有问题:"
+        #     self.status=-1
 
 
     def parseHtml(self,html):
-        try:
-            doc = pq(html)
-            imageList = doc('.slide li span')
-            imageUrl = []
-            for item in imageList.items():
-                style = item.attr('style')
-                temp = re.findall(r'\/\/(.*)\/', style)[0]
-                imageUrl.append('http://' + temp + '.jpg')
+        # try:
+        doc = pq(html)
+        imageList = doc('.slide li span')
+        imageUrl = []
+        for item in imageList.items():
+            style = item.attr('style')
+            temp = re.findall(r'\/\/(.*)\/', style)[0]
+            imageUrl.append('http://' + temp + '.jpg')
 
-            self.data['images'] = imageUrl
-            # print(imageUrl)
+        self.data['images'] = imageUrl
+        # print(imageUrl)
 
-            titleDoc = doc('h1.title')
-            title = titleDoc.text()
-            self.data['title'] = title
-            # print(title)
+        titleDoc = doc('h1.title')
+        title = titleDoc.text()
+        self.data['title'] = title
+        # print(title)
 
-            contentList = []
-            contentDoc = doc('.all-tip .content p')
-            for item in contentDoc.items():
-                contentList.append(item.text())
-            self.data['content'] = contentList
+        contentList = []
+        contentDoc = doc('.all-tip .content p')
+        for item in contentDoc.items():
+            contentList.append(item.text())
+        self.data['content'] = contentList
             # print(contentList)
 
-        except Exception as error:
-            print(error)
-            self.error =  f"{self.url}解析有问题"
-            self.status=-1
+        # except Exception as error:
+        #     print(error)
+        #     self.error =  f"{self.url}解析有问题"
+        #     self.status=-1
 
 
     def download(self):
-        try:
-            imageList = self.data['images']
-            title = self.data['title']
-            contentList = self.data['content']
-            i = 1
-            path = f'./{title[0:4]}'
-            folder = os.path.exists(path)
-            if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
-                os.makedirs(path)
-            for url in imageList:
-                r = requests.get(url)
-                if r.status_code == 200:
-                    imagePath = f'{path}/{i}.jpg'
-                    open(f'{imagePath}', 'wb').write(r.content)  # 将内容写入图片
-                    i += 1
-            f = open(f'{path}/content.txt', 'a', encoding='utf-8')
-            f.write(str(title) + '\n')
-            for item in contentList:
-                f.write(str(item) + '\n')
-            f.close()
-            self.status=1
-        except Exception as error:
-            print(error)
-            self.error=  f"{self.url}下载有问题"
-            self.status=-1
+        # try:
+        imageList = self.data['images']
+        title = self.data['title']
+        contentList = self.data['content']
+        i = 1
+        path = f'./{title[0:4]}'
+        folder = os.path.exists(path)
+        if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+            os.makedirs(path)
+        for url in imageList:
+            r = requests.get(url)
+            if r.status_code == 200:
+                imagePath = f'{path}/{i}.jpg'
+                open(f'{imagePath}', 'wb').write(r.content)  # 将内容写入图片
+                i += 1
+        f = open(f'{path}/content.txt', 'a', encoding='utf-8')
+        f.write(str(title) + '\n')
+        for item in contentList:
+            f.write(str(item) + '\n')
+        f.close()
+        self.status=1
+        # except Exception as error:
+        #     print(error)
+        #     self.error=  f"{self.url}下载有问题"
+        #     self.status=-1
 
 
 
