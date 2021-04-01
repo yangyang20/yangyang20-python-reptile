@@ -139,7 +139,7 @@ class XiaoHongShu:
             cursor.close()
             self.status=1
         except Exception as error:
-            self.error =  f"{self.url}数据库插入错误" +error
+            self.error =  f"{self.url}数据库插入错误" + error
             self.status=-1
 
 

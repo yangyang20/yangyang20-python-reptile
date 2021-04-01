@@ -56,6 +56,8 @@ if __name__ == '__main__':
     cursor.execute(sql)
     data = cursor.fetchall()
     msg = ' '
+    if len(data)==0:
+        print("没有待处理的数据")
     for item in data:
         url_list = item['url_list']
         for res in read(url_list):
@@ -68,6 +70,7 @@ if __name__ == '__main__':
         '''
         print(update_sql)
         cursor.execute(update_sql)
+
     connection.commit()
     cursor.close()
     connection.close()
