@@ -49,9 +49,10 @@ class XiaoHongShu:
         driver.get(url)
         self.data['url'] = url
         self.url = url
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.CLASS_NAME, "slide")))
         html = driver.find_element_by_id('app').get_attribute('innerHTML')
+
         self.parseHtml(html)
         self.data['real_url'] = driver.current_url
         driver.close()

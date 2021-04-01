@@ -65,11 +65,11 @@ if __name__ == '__main__':
             if res != True:
                 msg += res
         print(msg)
-        update_sql = f'''
-            update dh_xiaohongshu_collection set `updated_at` = '{now_time}' ,`status`= 1,`msg`="{msg}" where id={item['id']}
-        '''
-        print(update_sql)
-        cursor.execute(update_sql)
+        # update_sql = f'''
+        #     update dh_xiaohongshu_collection set `updated_at` = '{now_time}' ,`status`= 1,`msg`="{msg}" where id={item['id']}
+        # '''
+        # print(update_sql)
+        # cursor.execute(update_sql)
 
     connection.commit()
     cursor.close()
