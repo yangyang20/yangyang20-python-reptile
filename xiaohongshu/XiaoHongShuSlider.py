@@ -49,11 +49,14 @@ class XiaoHongShu:
         driver.get(url)
         self.data['url'] = url
         self.url = url
-        WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "slide")))
-        html = driver.find_element_by_id('app').get_attribute('innerHTML')
-
-        self.parseHtml(html)
+        # WebDriverWait(driver, 30).until(
+        #     EC.presence_of_element_located((By.CLASS_NAME, "slide")))
+        # html = driver.find_element_by_id('app').get_attribute('innerHTML')
+        WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.ID, "form")))
+        html = driver.find_element_by_id('form').get_attribute('innerHTML')
+        print(html)
+        # self.parseHtml(html)
         self.data['real_url'] = driver.current_url
         driver.close()
         # except Exception as error:
@@ -150,7 +153,7 @@ class XiaoHongShu:
 
 if __name__ == '__main__':
     xiaohongshu = XiaoHongShu()
-    xiaohongshu.download()
+    xiaohongshu.requestUrl('http://www.baidu.com')
 
 
 
