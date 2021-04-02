@@ -150,7 +150,7 @@ class XiaoHongShu:
 
 if __name__ == '__main__':
     xiaohongshu = XiaoHongShu()
-    xiaohongshu.requestUrl('http://www.baidu.com')
+    xiaohongshu.requestUrl('https://www.xiaohongshu.com/discovery/item/606047ce0000000001027394')
 
 
 
