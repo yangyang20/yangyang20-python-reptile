@@ -28,6 +28,7 @@ opts.add_argument('blink-settings=imagesEnabled=false')
 opts.add_argument('--disable-gpu')
 drive_path=cf.get("path","drive_path")
 
+
 baseUrl='https://wuhan.newhouse.fang.com'
 driver = webdriver.Chrome(executable_path=drive_path,options=opts)
 
@@ -47,7 +48,7 @@ def parsePage():
     pageCount = int(pageRow[0])
     for i in range(1,pageCount):
         # try:
-        page = f'9{i}/'
+        page = f'b9{i}/'
         temp = url + page
         parseHtml(temp)
         # except Exception as e:
@@ -61,9 +62,9 @@ def parseHtml(url):
     driver.get(url)
 
     WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "newhouse_loupai_list")))
+        EC.presence_of_element_located((By.ID, "newhouse_loupan_list")))
 
-    html = driver.find_element_by_id('newhouse_loupai_list').get_attribute('innerHTML')
+    html = driver.find_element_by_id('newhouse_loupan_list').get_attribute('innerHTML')
     doc = pq(html)
 
 
@@ -88,19 +89,23 @@ def parseHtml(url):
 
 
 def parseItem(item):
-    temp=''
-    for fangyuan in item['fangyuan'].items():
-        temp+=fangyuan.text()+"-"
-    item['fangyuan'] = temp[:-1]
-    temp=''
-    for house_type in item['house_type'].items():
-        temp+=house_type.text()+'-'
-    item['house_type'] = temp[:-1]
+    try:
+        temp = ''
+        for fangyuan in item['fangyuan'].items():
+            temp += fangyuan.text() + "-"
+        item['fangyuan'] = temp[:-1]
+        temp = ''
+        for house_type in item['house_type'].items():
+            temp += house_type.text() + '-'
+        item['house_type'] = temp[:-1]
 
-    item['region'] = re.findall(r'\[(.*?)\]',item['lp_address'])[0]
+        item['region'] = re.findall(r'\[(.*?)\]', item['lp_address'])[0]
 
-    print(item)
-    insterData(item)
+        print(item)
+        insterData(item)
+    except Exception as e:
+        print(e)
+
     # pass
 
 

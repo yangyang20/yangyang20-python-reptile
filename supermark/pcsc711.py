@@ -90,6 +90,10 @@ def area(cityId,id):
     # print(response.text)
     # 返回结果是xml，解析需要的信息，插入数据库
     xml = ET.fromstring(response.text)
+    print(response.text)
+    print(xml)
+    print(xml.text)
+    print(9999)
     for table in xml.getiterator('GeoPosition'):
         townName = table.find('TownName')
         StoreMsg['area'] = townName.text
